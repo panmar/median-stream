@@ -2,14 +2,15 @@
 #include <string>
 
 void swap(int& a, int& b) {
-    //NOTE: we assume that &a != &b
-    a ^= b;
-    b ^= a;
-    a ^= b;
+    if (&a != &b) {
+        a ^= b;
+        b ^= a;
+        a ^= b;
+    }
 }
 
 template<class T>
-void resize(T*& array, size_t arraySize, size_t newSize) {
+void resize(T*& array, size_t arraySize, size_t& capacity, size_t newSize) {
     if (newSize > arraySize) {
         T* newArray = new T [newSize];
         for (int i = 0; i < arraySize; ++i) {
@@ -17,16 +18,20 @@ void resize(T*& array, size_t arraySize, size_t newSize) {
         }
         delete [] array;
         array = newArray;
+        capacity = newSize;
     }
 }
 
+//NOTE: template function specialization for int
+//uses more efficient memcpy to copy array of primitives
 template<>
-void resize(int*& array, size_t arraySize, size_t newSize) {
+void resize(int*& array, size_t arraySize, size_t& capacity, size_t newSize) {
     if (newSize > arraySize) {
         int* newArray = new int [newSize];
         memcpy(newArray, array, sizeof(int) * arraySize);
         delete [] array;
         array = newArray;
+        capacity = newSize;
     }
 }
 
@@ -39,12 +44,14 @@ public:
 
     Heap(const Heap&) = delete;
     Heap operator=(const Heap&) = delete;
-    Heap(Heap&& o) = delete;
+    Heap(Heap&&) = delete;
     Heap operator=(Heap&&) = delete;
 
     ~Heap() { delete [] _items; }
 
     int size() const { return _size; }
+
+    bool isEmpty() const { return _size == 0; }
 
     T top() const {
         if (!_size) {
@@ -57,7 +64,7 @@ public:
     void push(T item) {
         if (_size == _capacity) {
             int newSize = static_cast<int>(_resizeCoefficient * _capacity);
-            resize(_items, _size, newSize);
+            resize(_items, _size, _capacity, newSize);
         }
 
         int index = _size;
@@ -96,6 +103,7 @@ public:
     }
 
 private:
+    //NOTE: an index must be greater than 0
     int parentIndex(int index) const {
         return (index - 1) / 2;
     }
@@ -109,11 +117,11 @@ private:
     }
 
     static const int _initialCapacity = 10;
-    static constexpr float _resizeCoefficient = 2.0f;
+    static constexpr float _resizeCoefficient = 2.3f;
     Comparator _cmp;
     T* _items = nullptr;
-    int _capacity = 0;
-    int _size = 0;
+    size_t _capacity = 0;
+    size_t _size = 0;
 };
 
 template<class T>
