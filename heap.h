@@ -1,5 +1,7 @@
+#pragma once
+
 #include <stdexcept>
-#include <string>
+#include "array.h"
 
 void swap(int& a, int& b) {
     if (&a != &b) {
@@ -9,52 +11,25 @@ void swap(int& a, int& b) {
     }
 }
 
-template<class T>
-void resize(T*& array, size_t arraySize, size_t& capacity, size_t newSize) {
-    if (newSize > arraySize) {
-        T* newArray = new T [newSize];
-        for (int i = 0; i < arraySize; ++i) {
-            newArray[i] = array[i];
-        }
-        delete [] array;
-        array = newArray;
-        capacity = newSize;
-    }
-}
-
-//NOTE: template function specialization for int
-//uses more efficient memcpy to copy array of primitives
-template<>
-void resize(int*& array, size_t arraySize, size_t& capacity, size_t newSize) {
-    if (newSize > arraySize) {
-        int* newArray = new int [newSize];
-        memcpy(newArray, array, sizeof(int) * arraySize);
-        delete [] array;
-        array = newArray;
-        capacity = newSize;
-    }
-}
-
 template<class T, class Comparator>
 class Heap {
 public:
-    Heap(int capacity = _initialCapacity) : _capacity(capacity) {
-        _items = new T[capacity];
+    Heap() {
     }
 
     Heap(const Heap&) = delete;
-    Heap operator=(const Heap&) = delete;
+    Heap& operator=(const Heap&) = delete;
     Heap(Heap&&) = delete;
-    Heap operator=(Heap&&) = delete;
+    Heap& operator=(Heap&&) = delete;
 
-    ~Heap() { delete [] _items; }
+    ~Heap() { }
 
-    int size() const { return _size; }
+    int size() const { return _items.size(); }
 
-    bool isEmpty() const { return _size == 0; }
+    bool isEmpty() const { return _items.isEmpty(); }
 
     T top() const {
-        if (!_size) {
+        if (_items.isEmpty()) {
             throw std::length_error("There is no top element in empty heap.");
         } else {
             return _items[0];
@@ -62,21 +37,16 @@ public:
     }
 
     void push(T item) {
-        if (_size == _capacity) {
-            int newSize = static_cast<int>(_resizeCoefficient * _capacity);
-            resize(_items, _size, _capacity, newSize);
-        }
-
-        int index = _size;
-        _items[_size++] = item;
+        int index = _items.size();
+        _items.push(item);
         while (index > 0 && _cmp(_items[index], _items[parentIndex(index)])) {
-            swap(_items[index], _items[parentIndex(index)]);
-            index = parentIndex(index);
+           swap(_items[index], _items[parentIndex(index)]);
+           index = parentIndex(index);
         }
     }
 
     T popAndPush(T item) {
-        if (!_size) {
+        if (_items.isEmpty()) {
             throw std::length_error("Cannot pop from an empty heap.");
         }
 
@@ -84,11 +54,11 @@ public:
         _items[0] = item;
 
         int index = 0;
-        while (lchildIndex(index) < _size) {
+        while (lchildIndex(index) < _items.size()) {
             int lci = lchildIndex(index);
             int rci = rchildIndex(index);
 
-            if (rci < _size && _cmp(_items[rci], _items[lci]) && _cmp(_items[rci], _items[index])) {
+            if (rci < _items.size() && _cmp(_items[rci], _items[lci]) && _cmp(_items[rci], _items[index])) {
                 swap(_items[index], _items[rci]);
                 index = rci;
             } else if (_cmp(_items[lci], _items[index])) {
@@ -116,12 +86,8 @@ private:
         return index * 2 + 2;
     }
 
-    static const int _initialCapacity = 10;
-    static constexpr float _resizeCoefficient = 2.3f;
     Comparator _cmp;
-    T* _items = nullptr;
-    size_t _capacity = 0;
-    size_t _size = 0;
+    Array<T> _items;
 };
 
 template<class T>
