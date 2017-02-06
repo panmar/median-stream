@@ -17,11 +17,8 @@ double get_median(const MaxHeap<int>& maxHeap, const MinHeap<int>& minHeap) {
 void compute_median(std::istream& in, std::ostream& os) {
     MaxHeap<int> maxHeap;
     MinHeap<int> minHeap;
-
-    std::istream_iterator<int> in_it(in);
-    while (in_it != std::istream_iterator<int>()) {
-        int number = *in_it;
-
+    int number;
+    while (in >> number) {
         if (maxHeap.size() == minHeap.size()) {
             if (!maxHeap.isEmpty() && number < minHeap.top()) {
                 maxHeap.push(number);
@@ -47,7 +44,6 @@ void compute_median(std::istream& in, std::ostream& os) {
         os << std::setprecision(12)
             << get_median(maxHeap, minHeap)
             << std::endl;
-        in_it++;
     }
 }
 
