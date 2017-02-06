@@ -13,7 +13,7 @@ def clean_tests():
 
 if __name__ == "__main__":
     clean_tests();
-    test_capacities = { 5000, 1234 };
+    test_capacities = { 10000 };
     test_number = 1;
     for capacity in test_capacities:
         random.seed()
@@ -36,9 +36,10 @@ if __name__ == "__main__":
         widgets[0] = outtest_filename
         with open(outtest_filename, "w") as test_file:
             bar.start()
-            for i in range(1, len(numbers)):
+            for i in range(1, len(numbers) + 1):
                 median = statistics.median(numbers[:i])
-                test_file.write("%s\n" % median)
+                stripped_median = ('%f' % median).rstrip('0').rstrip('.')
+                test_file.write("%s\n" % stripped_median)
                 bar.update(i)
 
         test_number += 1
