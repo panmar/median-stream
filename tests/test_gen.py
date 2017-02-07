@@ -13,7 +13,7 @@ def clean_tests():
 
 if __name__ == "__main__":
     clean_tests();
-    test_capacities = { 10000 };
+    test_capacities = { 10000, 100000, 3000, 1, 10, 25000 };
     test_number = 1;
     for capacity in test_capacities:
         random.seed()
@@ -34,12 +34,16 @@ if __name__ == "__main__":
         outtest_filename = "test" + str(test_number).zfill(2) + ".out"
         bar = progressbar.ProgressBar(widgets=widgets, maxval=len(numbers))
         widgets[0] = outtest_filename
+
+        bar.start()
+        medians = []
+        for i in range(1, len(numbers) + 1):
+            median = statistics.median(numbers[:i])
+            stripped_median = ('%f' % median).rstrip('0').rstrip('.')
+            medians.append(stripped_median)
+            bar.update(i)
         with open(outtest_filename, "w") as test_file:
-            bar.start()
-            for i in range(1, len(numbers) + 1):
-                median = statistics.median(numbers[:i])
-                stripped_median = ('%f' % median).rstrip('0').rstrip('.')
-                test_file.write("%s\n" % stripped_median)
-                bar.update(i)
+            for m in medians:
+                test_file.write("%s\n" % m)
 
         test_number += 1
