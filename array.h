@@ -52,6 +52,30 @@ public:
         _items[_size++] = item;
     }
 
+    T& back() {
+        if (!_size) {
+            throw std::length_error("Empty array has no back element.");
+        } else {
+            return _items[_size - 1];
+        }
+    }
+
+    const T& back() const {
+        if (!_size) {
+            throw std::length_error("Empty array has no back element.");
+        } else {
+            return _items[_size - 1];
+        }
+    }
+
+    T pop_back() {
+        if (!_size) {
+            throw std::length_error("Empty array has no back element.");
+        } else {
+            return _items[--_size];
+        }
+    }
+
     void insert_after(int index, const T& item) {
 
     }
