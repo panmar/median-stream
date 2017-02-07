@@ -45,15 +45,19 @@ public:
         }
     }
 
-    T popAndPush(T item) {
+    T pop() {
         if (_items.isEmpty()) {
             throw std::length_error("Cannot pop from an empty heap.");
         }
 
         T result = _items[0];
-        _items[0] = item;
+        _items[0] = _items.pop_back();
+        propagate_down(0);
+        return result;
+    }
 
-        int index = 0;
+private:
+    void propagate_down(size_t index) {
         while (lchildIndex(index) < _items.size()) {
             int lci = lchildIndex(index);
             int rci = rchildIndex(index);
@@ -68,21 +72,18 @@ public:
                 break;
             }
         }
-
-        return result;
     }
 
-private:
     //NOTE: an index must be greater than 0
-    int parentIndex(int index) const {
+    int parentIndex(size_t index) const {
         return (index - 1) / 2;
     }
 
-    int lchildIndex(int index) const {
+    int lchildIndex(size_t index) const {
         return index * 2 + 1;
     }
 
-    int rchildIndex(int index) const {
+    int rchildIndex(size_t index) const {
         return index * 2 + 2;
     }
 
