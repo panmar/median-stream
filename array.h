@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 template<class T>
 class Array {
 public:
@@ -18,13 +20,19 @@ public:
     }
 
     T& operator[](size_t index) {
-        //TODO: check range
-        return _items[index];
+        if (index < _size) {
+            return _items[index];
+        } else {
+            throw std::range_error("Out of range array index.");
+        }
     }
 
     const T& operator[](size_t index) const {
-        //TODO: check range
-        return _items[index];
+        if (index < _size) {
+            return _items[index];
+        } else {
+            throw std::range_error("Out of range array index.");
+        }
     }
 
     size_t size() const {
