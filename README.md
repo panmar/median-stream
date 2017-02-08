@@ -7,7 +7,7 @@
 This solution tries to find a median of unsorted array each time new sample is submitted. It uses partitioning of input data into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. Then the set containing the median is chosen and last step is repeated recursively until the median is found. Worst case complexity is **O(N<sup>2</sup>)**, where **N** is the number of already processed numbers. Memory requirement is **O(N)**.
 
 #####Possible improvements#####
-* Change pivot chosing strategy (e.g. median of medians of 5) to get **O(N)** worst-case complexity.
+* Change pivot chosing strategy (e.g. *median of medians of 5*) to get **O(N)** worst-case complexity.
 
 ##Solution 2: min-max heaps
 
