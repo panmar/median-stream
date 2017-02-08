@@ -13,7 +13,8 @@
 #include "array.h"
 
 int partition(Array<int>& array, int start, int end) {
-    int pivot_value = array[end];
+    int pivot_index = start + (end - start) / 2;
+    int pivot_value = array[pivot_index];
     while (start < end) {
         while (array[start] < pivot_value) ++start;
         while (array[end] > pivot_value) --end;
