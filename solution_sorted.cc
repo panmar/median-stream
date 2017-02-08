@@ -2,9 +2,9 @@
 #include <iomanip>
 #include "array.h"
 
-size_t last_smaller_index(const Array<int>& array, int elem) {
+size_t first_greater_index(const Array<int>& array, int elem) {
     for (size_t i = 0; i < array.size(); ++i) {
-        if (array[i] >= elem) {
+        if (array[i] > elem) {
             return i;
         }
     }
@@ -15,7 +15,7 @@ void compute_median(std::istream& in, std::ostream& os) {
     int number;
     Array<int> numbers;
     while (in >> number) {
-        size_t insert_index = last_smaller_index(numbers, number);
+        size_t insert_index = first_greater_index(numbers, number);
         numbers.insert(number, insert_index);
 
         double median = 0.0;
