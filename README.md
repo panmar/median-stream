@@ -2,7 +2,11 @@
 
 **Problem**: *Given unordered stream of integers make an algorithm returning a median of already registered numbers.*
 
-##Solution 1: hoare partition
+##Solution 1: quickselect partition
+
+This solution tries to find median of unsorted array each time new sample is submitted. It uses partitioning of input data into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. This step is repeated recursively until median is found. Worst case complexity is O(N<sup>2</sup>), where N is the number of already processed numbers. Memory requirement is O(N).
+
+Possible improvements: change pivot chosing strategy (e.g. median of medians of 5) to get O(N) worst-case complexity.
 
 ##Solution 2: min-max heaps
 
@@ -12,5 +16,7 @@ This is a general solution that does not assume anything about input integers. I
 
 | Solutions          | test01.in  | test02.in  | test03.in  | test04.in  | test05.in  | test06.in  |
 | ------------------ | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-|*hoare partition*   | -      | -      | -      | -      | -      | -      |
+|*quickselect*       | 18.52s      | -      | -      | -      | -      | -      |
 |*min-max heaps*     | 0.08s      | 0.68s      | 0.22s      | 0.32s      | 0.27s      | 0.14s      |
+
+##Build##
