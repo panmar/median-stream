@@ -10,8 +10,7 @@ This solution maintains sorted array. Finding the median takes **O(1)** and inse
 
 This solution uses partitioning of stored integers into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. Then the part containing the median is chosen and last step is repeated recursively until the median is found. Worst case complexity is **O(N<sup>2</sup>)**, where **N** is the number of already processed numbers. Memory requirement is **O(N)**.
 
-#####Possible improvements#####
-* Change pivot chosing strategy (e.g. *median of medians of 5*) to get **O(N)** worst-case complexity.
+Theoretically, there are some pivot chosing strategies (e.g. *median of 5 medians*) to guarantee **O(N)** worst-case complexity. I have tested *median of 5 medians* and it gives poorer results than below solution.
 
 ##Solution 3: min-max heaps
 
