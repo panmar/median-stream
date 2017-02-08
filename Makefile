@@ -1,10 +1,9 @@
 CCFLAGS=-std=c++11 -Wall -O2
 
-.PHONY: test solution
+.PHONY: tests solutions
 
-test: array.h heap.h tests/heap_test.cc
+tests: array.h heap.h tests/heap_test.cc
 	g++ $(CCFLAGS) tests/heap_test.cc -o bin/heap_test
 
-solution: array.h heap.h solution_heaps.cc solution_rolling_window.cc
+solutions: array.h heap.h solution_heaps.cc
 	g++ $(CCFLAGS) solution_heaps.cc -o bin/solution_heaps
-	g++ $(CCFLAGS) solution_rolling_window.cc -o bin/solution_rolling_window
