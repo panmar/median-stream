@@ -2,7 +2,7 @@
 
 **Problem**: *Given unordered stream of integers make an algorithm returning a median of already registered numbers.*
 
-##Solution 1: sorted
+##Solution 1: sorted array
 
 This solution maintains sorted array. Finding the median takes **O(1)** and inserting new element into the array **O(N)** (**O(lgN)** using binary search to find insertion index and **O(N)** to repair the array.)
 
