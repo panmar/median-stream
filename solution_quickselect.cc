@@ -5,8 +5,9 @@
 // recursively until the median is found. Worst case complexity is O(N^2),
 // where N is the number of already processed numbers. Memory requirement is O(N).
 
-// Possible improvements: change pivot chosing strategy (e.g. median of medians of 5)
-// to get O(n) worst-case complexity.
+// Theoretically, there are some pivot chosing strategies (e.g. median of 5 medians)
+// to guarantee O(n) worst-case complexity. I have tested "median of 5 medians"
+// and it gives poorer results than below solution.
 
 #include <iostream>
 #include <iomanip>
