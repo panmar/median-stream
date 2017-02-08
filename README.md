@@ -17,7 +17,7 @@ This is a general solution that does not assume anything about input integers. I
 
 | Solutions          | test01.in  | test02.in  | test03.in  | test04.in  | test05.in  | test06.in  |
 | ------------------ | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-|*quickselect*       | 18.52s      | -      | -      | -      | -      | -      |
+|*quickselect*       | 0.18s      | 9.13s      | 1.02s      | 3.41s      | 2.41s      | 0.70s      |
 |*min-max heaps*     | 0.08s      | 0.68s      | 0.22s      | 0.32s      | 0.27s      | 0.14s      |
 
 ##Build##
