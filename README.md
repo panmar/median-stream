@@ -4,7 +4,7 @@
 
 ##Solution 1: sorted array
 
-This solution maintains sorted array. Finding the median takes **O(1)** and inserting new element into the array **O(N)** (**O(lgN)** using binary search to find insertion index and **O(N)** to repair the array.)
+This solution maintains sorted array. Finding the median takes **O(1)** and inserting new element into the array **O(N)** (finding insertion index using binary search takes **O(lgN)** and repairing the array **O(N)**.)
 
 ##Solution 2: quickselect partition
 
