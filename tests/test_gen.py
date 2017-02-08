@@ -13,13 +13,28 @@ def clean_tests():
 
 if __name__ == "__main__":
     clean_tests();
-    test_capacities = { 10000, 100000, 3000, 1, 10, 25000 };
+    test_capacities = [10000, 100000, 30000, 60000, 50000, 25000]
     test_number = 1;
     for capacity in test_capacities:
         random.seed()
         numbers = []
         for i in range(0, capacity):
-            number = random.randint(-0x80000000, 0x7FFFFFFF)
+            if test_number < 4:
+                number = random.randint(-0x80000000, 0x7FFFFFFF)
+            elif test_number < 6:
+                noise_simulator = random.random()
+                if noise_simulator < 0.95:
+                    number = random.randint(-100000, 400000)
+                elif noise_simulator < 0.97:
+                    number = random.randint(5000000, 100000000)
+                else:
+                    number = random.randint(-100000000, -1000000)
+            else:
+                noise_simulator = random.random()
+                if noise_simulator < 0.95:
+                    number = random.randint(0, 500000)
+                else:
+                    number = random.randint(50000000, 1000000000)
             numbers.append(number)
 
         intest_filename = "test" + str(test_number).zfill(2) + ".in"
