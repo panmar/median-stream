@@ -2,13 +2,29 @@
 #include <iomanip>
 #include "array.h"
 
-size_t first_greater_index(const Array<int>& array, int elem) {
-    for (size_t i = 0; i < array.size(); ++i) {
-        if (array[i] > elem) {
-            return i;
+// Returns first index in range [begin...end) that array[index] > elem
+// Function uses recursive binary search with time complexity O(lgN), where N=end-begin
+size_t upper_bound(const Array<int>& array, int begin, int end, int elem) {
+    if (begin == end) {
+        return begin;
+    } else {
+        int middle = (begin + end) / 2;
+        if (array[middle] <= elem) {
+            return upper_bound(array, middle + 1, end, elem);
+        } else {
+            return upper_bound(array, begin, middle, elem);
         }
     }
-    return array.isEmpty() ? 0 : array.size();
+}
+
+// Returns first array index from the beginning that array[index] > elem
+size_t first_greater_index(const Array<int>& array, int elem) {
+    if (array.isEmpty()) {
+        return 0;
+    } else {
+        size_t index = upper_bound(array, 0, array.size(), elem);
+        return index;
+    }
 }
 
 void compute_median(std::istream& in, std::ostream& os) {
