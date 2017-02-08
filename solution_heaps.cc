@@ -24,31 +24,38 @@ double get_median(const MaxHeap<int>& h1, const MinHeap<int>& h2) {
     }
 }
 
+void balance_heaps(MaxHeap<int>& h1, MinHeap<int>& h2) {
+    if (h1.size() > h2.size()) {
+        int h1Top = h1.pop();
+        h2.push(h1Top);
+    } else if (h2.size() > h1.size()) {
+        int h2Top = h2.pop();
+        h1.push(h2Top);
+    }
+}
+
 void compute_median(std::istream& in, std::ostream& os) {
     MaxHeap<int> maxHeap;
     MinHeap<int> minHeap;
     int number;
     while (in >> number) {
-        if (maxHeap.size() == minHeap.size()) {
-            if (!maxHeap.isEmpty() && number < minHeap.top()) {
-                maxHeap.push(number);
-            } else {
-                minHeap.push(number);
-            }
-        } else if (maxHeap.size() > minHeap.size()) {
-            if (number >= maxHeap.top()) {
-                minHeap.push(number);
-            } else {
-                int prevMaxTop = maxHeap.popAndPush(number);
-                minHeap.push(prevMaxTop);
-            }
+        if (!minHeap.isEmpty() && number < minHeap.top()) {
+            maxHeap.push(number);
+        } else if (!maxHeap.isEmpty() && number > maxHeap.top()){
+            minHeap.push(number);
         } else {
-            if (number <= minHeap.top()) {
-                maxHeap.push(number);
-            } else {
-                int prevMinTop = minHeap.popAndPush(number);
-                maxHeap.push(prevMinTop);
+            maxHeap.push(number);
+        }
+
+        if (!maxHeap.isEmpty() && !minHeap.isEmpty()) {
+            if (maxHeap.top() > minHeap.top()) {
+                std::cout << "ERROR!\n";
             }
+        }
+
+        if (minHeap.size() == maxHeap.size() + 2
+            || maxHeap.size() == minHeap.size() + 2) {
+            balance_heaps(maxHeap, minHeap);
         }
 
         os << std::setprecision(12)

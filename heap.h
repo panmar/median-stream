@@ -49,33 +49,6 @@ public:
         return result;
     }
 
-    T popAndPush(T item) {
-        if (_items.isEmpty()) {
-            throw std::length_error("Cannot pop from an empty heap.");
-        }
-
-        T result = _items[0];
-        _items[0] = item;
-
-        int index = 0;
-        while (lchildIndex(index) < _items.size()) {
-            int lci = lchildIndex(index);
-            int rci = rchildIndex(index);
-
-            if (rci < _items.size() && _cmp(_items[rci], _items[lci]) && _cmp(_items[rci], _items[index])) {
-                swap(_items[index], _items[rci]);
-                index = rci;
-            } else if (_cmp(_items[lci], _items[index])) {
-                swap(_items[index], _items[lci]);
-                index = lci;
-            } else {
-                break;
-            }
-        }
-
-        return result;
-    }
-
 private:
     // Propagate the unordered item at index so that after completing
     // the function whole heap is again in proper order.
