@@ -47,12 +47,6 @@ void compute_median(std::istream& in, std::ostream& os) {
             maxHeap.push(number);
         }
 
-        if (!maxHeap.isEmpty() && !minHeap.isEmpty()) {
-            if (maxHeap.top() > minHeap.top()) {
-                std::cout << "ERROR!\n";
-            }
-        }
-
         if (minHeap.size() == maxHeap.size() + 2
             || maxHeap.size() == minHeap.size() + 2) {
             balance_heaps(maxHeap, minHeap);
