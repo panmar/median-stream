@@ -24,11 +24,11 @@ public:
 
     ~Heap() { }
 
-    int size() const { return _items.size(); }
+    size_t size() const { return _items.size(); }
 
     bool isEmpty() const { return _items.isEmpty(); }
 
-    T top() const {
+    const T& top() const {
         if (_items.isEmpty()) {
             throw std::length_error("There is no top element in empty heap.");
         } else {
@@ -45,6 +45,7 @@ public:
         }
     }
 
+    // Returns the root element of the heap, removing it as well
     T pop() {
         if (_items.isEmpty()) {
             throw std::length_error("Cannot pop from an empty heap.");
@@ -56,7 +57,36 @@ public:
         return result;
     }
 
+    T popAndPush(T item) {
+        if (_items.isEmpty()) {
+            throw std::length_error("Cannot pop from an empty heap.");
+        }
+
+        T result = _items[0];
+        _items[0] = item;
+
+        int index = 0;
+        while (lchildIndex(index) < _items.size()) {
+            int lci = lchildIndex(index);
+            int rci = rchildIndex(index);
+
+            if (rci < _items.size() && _cmp(_items[rci], _items[lci]) && _cmp(_items[rci], _items[index])) {
+                swap(_items[index], _items[rci]);
+                index = rci;
+            } else if (_cmp(_items[lci], _items[index])) {
+                swap(_items[index], _items[lci]);
+                index = lci;
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    }
+
 private:
+    // Propagate the unordered item at index so that after completing
+    // the function whole heap is again in proper order.
     void propagate_down(size_t index) {
         while (lchildIndex(index) < _items.size()) {
             int lci = lchildIndex(index);
@@ -75,15 +105,15 @@ private:
     }
 
     //NOTE: an index must be greater than 0
-    int parentIndex(size_t index) const {
+    int parentIndex(int index) const {
         return (index - 1) / 2;
     }
 
-    int lchildIndex(size_t index) const {
+    int lchildIndex(int index) const {
         return index * 2 + 1;
     }
 
-    int rchildIndex(size_t index) const {
+    int rchildIndex(int index) const {
         return index * 2 + 2;
     }
 
