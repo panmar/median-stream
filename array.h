@@ -76,10 +76,6 @@ public:
         }
     }
 
-    void insert_after(int index, const T& item) {
-
-    }
-
 private:
     void resize(size_t newCapacity) {
         if (newCapacity > _size) {
