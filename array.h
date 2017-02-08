@@ -84,6 +84,20 @@ public:
         }
     }
 
+    // Inserts an element at index moving all elements [index..] right
+    void insert(const T& elem, size_t index) {
+        if (index > _size) {
+            throw std::range_error("Array insertion index out of range.");
+        } else {
+            push(elem);
+            int i = _size - 1;
+            while (i > index) {
+                swap(_items[i], _items[i-1]);
+                --i;
+            }
+        }
+    }
+
 private:
     void resize(size_t newCapacity) {
         if (newCapacity > _size) {
