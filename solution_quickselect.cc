@@ -1,9 +1,9 @@
-// This solution tries to find median of unsorted array each time new sample is
-// submitted. It uses partitioning of input data into two parts: one part
-// contains numbers smaller or equal than chosen pivot and second part greater
-// This step is repeated recursively until median is found. Worst case complexity
-// is O(N^2), where N is the number of already processed numbers. Memory
-// requirement is O(N).
+// This solution tries to find a median of unsorted array each time new sample
+// is submitted. It uses partitioning of input data into two parts: one part
+// contains numbers smaller or equal than chosen pivot and second part greater.
+// Then the set containing the median is chosen and last step is repeated
+// recursively until the median is found. Worst case complexity is O(N^2),
+// where N is the number of already processed numbers. Memory requirement is O(N).
 
 // Possible improvements: change pivot chosing strategy (e.g. median of medians of 5)
 // to get O(n) worst-case complexity.
@@ -12,7 +12,12 @@
 #include <iomanip>
 #include "array.h"
 
+// Partition array[start...end] elements into two sets: array[start...result] and
+// array(result...end], so that elements in first set are smaller than elements
+// in the second set.
 int partition(Array<int>& array, int start, int end) {
+    // NOTE: a middle element is chosen as a pivot because the passed array
+    // has tendency to be sorted the longer this solution is running
     int pivot_index = start + (end - start) / 2;
     int pivot_value = array[pivot_index];
     while (start < end) {
