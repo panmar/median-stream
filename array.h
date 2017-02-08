@@ -3,6 +3,14 @@
 #include <stdexcept>
 #include <string>
 
+void swap(int& a, int& b) {
+    if (&a != &b) {
+        a ^= b;
+        b ^= a;
+        a ^= b;
+    }
+}
+
 template<class T>
 class Array {
 public:

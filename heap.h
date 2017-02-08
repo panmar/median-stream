@@ -3,14 +3,6 @@
 #include <stdexcept>
 #include "array.h"
 
-void swap(int& a, int& b) {
-    if (&a != &b) {
-        a ^= b;
-        b ^= a;
-        a ^= b;
-    }
-}
-
 template<class T, class Comparator>
 class Heap {
 public:
