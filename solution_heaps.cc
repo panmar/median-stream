@@ -1,26 +1,26 @@
+// This is a general solution that does not assume much about input integers.
+// It uses two heaps to track the current median: a maxheap and a minheap,
+// so that at any point in the algorithm all stored integers in the maxheap are
+// smaller or equal to all stored integers in the minheap. Moreover at the end
+// of a main solution loop both heaps differs in size by one at the most.
+// Therefore, finding the median takes O(1) times - it is in the root of one or
+// both heaps. Inserting the next number into this structure takes O(lgN) time,
+// where N is the number of already processed numbers. Memory requirements is
+// also O(N).
+
 #include <iostream>
 #include <iomanip>
-#include <fstream>
 #include "heap.h"
 
-//NOTE: return double to prevent int overflow
-double get_median(const MaxHeap<int>& maxHeap, const MinHeap<int>& minHeap) {
-    if (maxHeap.size() == minHeap.size()) {
-        return (static_cast<double>(maxHeap.top()) + minHeap.top()) / 2.0;
-    } else if (maxHeap.size() > minHeap.size()) {
-        return maxHeap.top();
+// NOTE: return double to prevent int overflow; assume at least one of the heaps
+// is not empty
+double get_median(const MaxHeap<int>& h1, const MinHeap<int>& h2) {
+    if (h1.size() == h2.size()) {
+        return (static_cast<double>(h1.top()) + h2.top()) / 2.0;
+    } else if (h1.size() > h2.size()) {
+        return h1.top();
     } else {
-        return minHeap.top();
-    }
-}
-
-void balance_heaps(MaxHeap<int>& maxHeap, MinHeap<int>& minHeap) {
-    if (maxHeap.size() > minHeap.size()) {
-        int maxHeapTop = maxHeap.pop();
-        minHeap.push(maxHeapTop);
-    } else if (minHeap.size() > maxHeap.size()) {
-        int minHeapTop = minHeap.pop();
-        maxHeap.push(minHeapTop);
+        return h2.top();
     }
 }
 
@@ -35,15 +35,20 @@ void compute_median(std::istream& in, std::ostream& os) {
             } else {
                 minHeap.push(number);
             }
-        } else if (!maxHeap.isEmpty() && number > maxHeap.top()) {
-            minHeap.push(number);
+        } else if (maxHeap.size() > minHeap.size()) {
+            if (number >= maxHeap.top()) {
+                minHeap.push(number);
+            } else {
+                int prevMaxTop = maxHeap.popAndPush(number);
+                minHeap.push(prevMaxTop);
+            }
         } else {
-            maxHeap.push(number);
-        }
-
-        if (minHeap.size() == maxHeap.size() + 2
-            || maxHeap.size() == minHeap.size() + 2) {
-            balance_heaps(maxHeap, minHeap);
+            if (number <= minHeap.top()) {
+                maxHeap.push(number);
+            } else {
+                int prevMinTop = minHeap.popAndPush(number);
+                maxHeap.push(prevMinTop);
+            }
         }
 
         os << std::setprecision(12)
