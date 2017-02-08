@@ -4,9 +4,10 @@
 
 ##Solution 1: quickselect partition
 
-This solution tries to find median of unsorted array each time new sample is submitted. It uses partitioning of input data into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. This step is repeated recursively until median is found. Worst case complexity is O(N<sup>2</sup>), where N is the number of already processed numbers. Memory requirement is O(N).
+This solution tries to find median of unsorted array each time new sample is submitted. It uses partitioning of input data into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. This step is repeated recursively until median is found. Worst case complexity is **O(N<sup>2</sup>)**, where **N** is the number of already processed numbers. Memory requirement is **O(N)**.
 
-Possible improvements: change pivot chosing strategy (e.g. median of medians of 5) to get O(N) worst-case complexity.
+#####Possible improvements#####
+* Change pivot chosing strategy (e.g. median of medians of 5) to get **O(N)** worst-case complexity.
 
 ##Solution 2: min-max heaps
 
@@ -20,3 +21,7 @@ This is a general solution that does not assume anything about input integers. I
 |*min-max heaps*     | 0.08s      | 0.68s      | 0.22s      | 0.32s      | 0.27s      | 0.14s      |
 
 ##Build##
+```
+make solutions
+make tests
+```
