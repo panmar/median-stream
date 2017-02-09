@@ -14,7 +14,7 @@ Theoretically, there are some pivot chosing strategies (e.g. *median of 5 median
 
 ##Solution 3: min-max heaps
 
-This is a general solution that does not assume anything about input integers. It uses two heaps to track the current median - a max-heap and a min-heap, so that at any point in the algorithm all stored integers in the max-heap are smaller or equal to all stored integers in the min-heap. Moreover at the end of a main solution loop both heaps differs in size by one at the most. Therefore, finding the median takes **O(1)** times - it is in the root of one or both heaps. Inserting the next number into this structure takes **O(lgN)** time, where N is the number of already processed numbers. Memory requirements is also **O(N)**. Overall time complexity after **N** numbers is **O(NlgN)**.
+This is a solution that uses two heaps to track the current median - a maxheap and a minheap - so that at any point in the algorithm all stored integers in the maxheap are smaller or equal to all stored integers in the minheap. Moreover, at the end of a main solution loop both heaps differs in size by one at the most. Therefore, finding the median takes **O(1)** times - it is in the root of one or both heaps. Inserting the next number into this structure takes **O(lgN)** time, where N is the number of already processed numbers. Memory requirements is also **O(N)**. Overall time complexity after **N** numbers is **O(NlgN)**.
 
 ##Results##
 
