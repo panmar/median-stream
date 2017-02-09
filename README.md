@@ -4,17 +4,17 @@
 
 ##Solution 1: sorted array
 
-This solution maintains sorted array. Finding the median takes **O(1)** and inserting new element into the array **O(N)** (finding an insertion index using binary search takes **O(lgN)** and repairing the array **O(N)**.)
+This solution maintains sorted array. Finding the median takes **O(1)** and inserting new element into the array **O(N)** (finding an insertion index using binary search takes **O(lgN)** and repairing the array **O(N)**.) Overall time complexity after **N** numbers is **O(N<sup>2</sup>)**.
 
 ##Solution 2: quickselect partition
 
-This solution uses partitioning of stored integers into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. Then the part containing the median is chosen and last step is repeated recursively until the median is found. Worst case complexity is **O(N<sup>2</sup>)**, where **N** is the number of already processed numbers. Memory requirement is **O(N)**.
+This solution uses partitioning of stored integers into two parts: one part contains numbers smaller or equal than chosen pivot and second part greater. Then the part containing the median is chosen and last step is repeated recursively until the median is found. Worst case complexity is **O(N<sup>2</sup>)**, where **N** is the number of already processed numbers. Memory requirement is **O(N)**. Overall time complexity after **N** numbers is **O(N<sup>3</sup>)**.
 
 Theoretically, there are some pivot chosing strategies (e.g. *median of 5 medians*) to guarantee **O(N)** worst-case complexity. I have tested *median of 5 medians* and it gives poorer results than below solution.
 
 ##Solution 3: min-max heaps
 
-This is a general solution that does not assume anything about input integers. It uses two heaps to track the current median - a max-heap and a min-heap, so that at any point in the algorithm all stored integers in the max-heap are smaller or equal to all stored integers in the min-heap. Moreover at the end of a main solution loop both heaps differs in size by one at the most. Therefore, finding the median takes **O(1)** times - it is in the root of one or both heaps. Inserting the next number into this structure takes **O(lgN)** time, where N is the number of already processed numbers. Memory requirements is also **O(N)**. 
+This is a general solution that does not assume anything about input integers. It uses two heaps to track the current median - a max-heap and a min-heap, so that at any point in the algorithm all stored integers in the max-heap are smaller or equal to all stored integers in the min-heap. Moreover at the end of a main solution loop both heaps differs in size by one at the most. Therefore, finding the median takes **O(1)** times - it is in the root of one or both heaps. Inserting the next number into this structure takes **O(lgN)** time, where N is the number of already processed numbers. Memory requirements is also **O(N)**. Overall time complexity after **N** numbers is **O(NlgN)**.
 
 ##Results##
 
