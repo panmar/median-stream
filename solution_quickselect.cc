@@ -4,10 +4,14 @@
 // Then the set containing the median is chosen and last step is repeated
 // recursively until the median is found. Worst case complexity is O(N^2),
 // where N is the number of already processed numbers. Memory requirement is O(N).
+// Overall time complexity after N numbers is O(N^3).
 
 // Theoretically, there are some pivot chosing strategies (e.g. median of 5 medians)
 // to guarantee O(n) worst-case complexity. I have tested "median of 5 medians"
-// and it gives poorer results than below solution.
+// and it gives poorer results than below solution (per single number). I have
+// tested median of 5 medians and it gives poorer results than below solution
+// (probably because the input buffer tends to be more sorted the more numbers
+// are read and choosing middle elements has high chance to split numbers equally.)
 
 #include <iostream>
 #include <iomanip>

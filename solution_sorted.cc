@@ -1,3 +1,8 @@
+// This solution maintains sorted array. Finding the median takes O(1) and
+// inserting new element into the array O(N) (finding an insertion index using
+// binary search takes O(lgN) and repairing the array O(N).) Overall time
+// complexity after N numbers is O(N^2).
+
 #include <iostream>
 #include <iomanip>
 #include "array.h"

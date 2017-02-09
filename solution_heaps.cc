@@ -6,7 +6,7 @@
 // Therefore, finding the median takes O(1) times - it is in the root of one or
 // both heaps. Inserting the next number into this structure takes O(lgN) time,
 // where N is the number of already processed numbers. Memory requirements is
-// also O(N).
+// also O(N). Overall time complexity after N numbers is O(NlgN).
 
 #include <iostream>
 #include <iomanip>
