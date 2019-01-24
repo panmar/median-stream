@@ -1,6 +1,6 @@
 # Running median problem
 
-**Problem**: *Given unordered stream of integers make an algorithm returning a median of already registered numbers.*
+**Problem**: *Given unordered stream of integers make an algorithm returning a median of already registered numbers.* (Do not use STL)
 
 ## Solution 1: sorted array
 
